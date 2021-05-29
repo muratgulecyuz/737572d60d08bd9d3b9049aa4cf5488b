@@ -5,11 +5,10 @@ import com.example.unitedspacetraveler.network.ServiceInterface
 import com.example.unitedspacetraveler.utils.BASE_URL
 import com.example.unitedspacetraveler.utils.CustomHttpLogger
 import okhttp3.OkHttpClient
+import okhttp3.Request
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.text.SimpleDateFormat
-import java.util.*
 import java.util.concurrent.TimeUnit
 
 class NetworkModule {
@@ -29,14 +28,13 @@ class NetworkModule {
         httpClient.addInterceptor(logging)
         httpClient.addInterceptor { chain ->
             val original = chain.request()
+            val originalHttpUrl = original.url
 
-            val request = original.newBuilder()
-                .header("Content-Type", "application/json")
-                .header("gmt", userTimeZone())
+            val url = originalHttpUrl.newBuilder()
 
-
-            chain.proceed(request.build())
-
+            val requestBuilder: Request.Builder = original.newBuilder()
+            requestBuilder.url(url.build())
+            chain.proceed(requestBuilder.build())
         }
 
         val clt = httpClient.build()
@@ -48,9 +46,5 @@ class NetworkModule {
             .build()
 
         return retrofit.create(ServiceInterface::class.java)
-    }
-
-    fun userTimeZone(): String {
-        return SimpleDateFormat("ZZZZZ", Locale.getDefault()).format(System.currentTimeMillis())
     }
 }

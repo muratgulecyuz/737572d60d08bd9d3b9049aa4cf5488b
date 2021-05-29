@@ -40,6 +40,7 @@ ext {
     retrofitVersion = '2.9.0'
     okhttpVersion = '4.9.0'
     lifeCycleVersion = "2.2.0"
+    koinVersion = "2.1.6"
 }
 
 dependencies {
@@ -69,5 +70,12 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifeCycleVersion"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifeCycleVersion"
     implementation "androidx.lifecycle:lifecycle-common-java8:$lifeCycleVersion"
+
+    implementation 'com.github.murgupluoglu:request-android:4.2.0'
+
+    //Koin
+    implementation "org.koin:koin-android:$koinVersion"
+    implementation "org.koin:koin-androidx-viewmodel:$koinVersion"
+
 
 }
