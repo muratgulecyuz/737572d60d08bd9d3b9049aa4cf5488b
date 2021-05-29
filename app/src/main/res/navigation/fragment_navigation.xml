@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fragment_navigation"
+    app:startDestination="@id/stationsFragment">
+
+    <fragment
+        android:id="@+id/stationsFragment"
+        android:name="com.example.unitedspacetraveler.ui.tabs.stations.StationsFragment"
+        android:label="@string/stations" />
+
+    <fragment
+        android:id="@+id/favoritesFragment"
+        android:name="com.example.unitedspacetraveler.ui.tabs.favorites.FavoritesFragment"
+        android:label="@string/favorites" />
+
+</navigation>

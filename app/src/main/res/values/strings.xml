@@ -8,4 +8,7 @@
     <string name="capacity">Kapasite</string>
     <string name="go_on">Devam</string>
     <string name="distribute_points">Tüm puanları dağıtın.</string>
+    <string name="stations">İstasyonlar</string>
+    <string name="favorites">Favoriler</string>
+
 </resources>
