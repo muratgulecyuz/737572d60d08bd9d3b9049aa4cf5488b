@@ -1,3 +1,11 @@
 <resources>
-    <string name="app_name">UnitedSpaceTraveler</string>
+    <string name="app_name" translatable="false">UnitedSpaceTraveler</string>
+
+    <string name="points_to_ne_distributed">Dağıtılacak Puan %1d</string>
+    <string name="enter_spacecraft_name">Uzay Aracının İsmini Girin</string>
+    <string name="strength">Dayanıklılık</string>
+    <string name="speed">Hız</string>
+    <string name="capacity">Kapasite</string>
+    <string name="go_on">Devam</string>
+    <string name="distribute_points">Tüm puanları dağıtın.</string>
 </resources>

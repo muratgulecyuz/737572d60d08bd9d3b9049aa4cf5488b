@@ -1,7 +1,8 @@
-package com.example.unitedspacetraveler
+package com.example.unitedspacetraveler.ui
 
 import android.os.Bundle
 import android.view.View
+import com.example.unitedspacetraveler.R
 import com.example.unitedspacetraveler.base.BaseActivity
 import com.example.unitedspacetraveler.databinding.ActivityMainBinding
 import com.example.unitedspacetraveler.utils.viewBinding
