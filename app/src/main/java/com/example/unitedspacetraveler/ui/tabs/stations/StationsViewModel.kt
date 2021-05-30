@@ -11,6 +11,7 @@ import com.example.unitedspacetraveler.localdata.StationsDatabase
 import com.example.unitedspacetraveler.localdata.StationsDatabaseModel
 import com.example.unitedspacetraveler.network.ServiceInterface
 import com.example.unitedspacetraveler.network.response.StationResponse
+import com.example.unitedspacetraveler.utils.getDistance
 import com.murgupluoglu.request.RESPONSE
 import com.murgupluoglu.request.request
 import kotlinx.coroutines.*
@@ -40,11 +41,91 @@ class StationsViewModel(
     }
 
 
-    fun setFavorite(isFavorite: Boolean, id: Int) {
-        stationsDb.stationsDao().setFavorite(isFavorite, id)
+    fun setFavorite(stationsDatabaseModel: StationsDatabaseModel) {
+        stationsDatabaseModel.isFavorite = stationsDatabaseModel.isFavorite.not()
+        updateStation(stationsDatabaseModel)
     }
 
-    fun decreaseDamage(currentDamage: Int) {
-        spaceCraftDb.spaceCraftDao().decreaseDamage(currentDamage - 10)
+    fun decreaseDamage() {
+        mySpaceCraft.spaceCraftDamage -= 10
+        updateSpaceCraft(mySpaceCraft)
+    }
+
+    private fun updateSpaceCraft(spaceCraftDatabaseModel: SpaceCraftDatabaseModel) =
+        CoroutineScope(Dispatchers.IO).launch {
+            spaceCraftDb.spaceCraftDao().updateSpaceCraft(spaceCraftDatabaseModel)
+        }
+
+    private fun updateStation(stationsDatabaseModel: StationsDatabaseModel) =
+        CoroutineScope(Dispatchers.IO).launch {
+            stationsDb.stationsDao().updateStation(stationsDatabaseModel)
+        }
+
+    private fun updateAllStations(stations: List<StationsDatabaseModel>) =
+        CoroutineScope(Dispatchers.IO).launch {
+            stationsDb.stationsDao().updateAllStations(stations)
+        }
+
+    fun travel(
+        arrivedPlanet: StationsDatabaseModel,
+        showToast: (message: String) -> Unit,
+        setPlanetName: () -> Unit
+    ) {
+        if (canGoPlanet(arrivedPlanet, showToast)) {
+            setPlanetName.invoke()
+            mySpaceCraft.xLocation = arrivedPlanet.coordinateX
+            mySpaceCraft.yLocation = arrivedPlanet.coordinateY
+            mySpaceCraft.spaceSuitNumber -= arrivedPlanet.need
+            mySpaceCraft.universalSpaceTime -= arrivedPlanet.universalSpaceTime
+            updateSpaceCraft(mySpaceCraft)
+
+            adapterList.forEach {
+                if (arrivedPlanet == it) {
+                    it.universalSpaceTime = 0
+                    it.need = 0
+                    it.stock = it.capacity
+                    it.isMissionCompleted = true
+                } else {
+                    it.universalSpaceTime = getDistance(
+                        mySpaceCraft.xLocation.toInt(),
+                        mySpaceCraft.yLocation.toInt(),
+                        it.coordinateX.toInt(),
+                        it.coordinateY.toInt()
+                    )
+                }
+
+            }
+            updateAllStations(adapterList)
+        }
+
+    }
+
+    private fun canGoPlanet(
+        arrivedPlanet: StationsDatabaseModel,
+        showToast: (message: String) -> Unit
+    ): Boolean {
+        if (arrivedPlanet.need > mySpaceCraft.spaceSuitNumber) {
+            showToast.invoke("Yeterli Giysi Yok")
+            return false
+        }
+        if (arrivedPlanet.universalSpaceTime > mySpaceCraft.universalSpaceTime) {
+            showToast.invoke("Yeterli Zaman Yok")
+            return false
+        }
+
+        if (mySpaceCraft.spaceCraftDamage < 1) {
+            showToast.invoke("Uzay aracı çok hasar aldı.")
+            return false
+        }
+        return true
+    }
+
+    fun getCurrentPlanetName(): String {
+        adapterList.forEach {
+            if (it.universalSpaceTime == 0) {
+                return "Şuan ${it.name} gezegenindesiniz."
+            }
+        }
+        return "asdasd"
     }
 }

@@ -32,6 +32,9 @@ class MainViewModel(
     fun addStations(stations: List<StationResponse>) = CoroutineScope(Dispatchers.IO).launch {
         val stationsDbList = arrayListOf<StationsDatabaseModel>()
         stations.forEach {
+            var isMissionCompleted = false
+            if (it.name == "Dünya")
+                isMissionCompleted = true
             stationsDbList.add(
                 StationsDatabaseModel(
                     name = it.name,
@@ -46,7 +49,8 @@ class MainViewModel(
                         0,
                         it.coordinateX.toInt(),
                         it.coordinateY.toInt()
-                    )
+                    ),
+                    isMissionCompleted = isMissionCompleted
                 )
             )
         }

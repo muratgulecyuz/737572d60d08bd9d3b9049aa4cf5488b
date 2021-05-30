@@ -32,12 +32,8 @@ interface SpaceCraftDao {
     @Query("SELECT * FROM spaceCraft ORDER BY id LIMIT 1")
     fun getSpaceCraft(): LiveData<SpaceCraftDatabaseModel?>
 
-    @Query("UPDATE spaceCraft SET spaceCraftDamage = :damage")
-    fun decreaseDamage(damage: Int)
-
-    @Query("UPDATE spaceCraft SET xLocation = :xLocation,yLocation = :yLocation")
-    fun updateLocation(xLocation: Double, yLocation: Double)
-
+    @Update
+    suspend fun updateSpaceCraft(spaceCraftDatabaseModel: SpaceCraftDatabaseModel)
 }
 
 @Entity(tableName = "spaceCraft")

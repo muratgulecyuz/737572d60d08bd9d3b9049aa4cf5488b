@@ -7,7 +7,7 @@ import androidx.room.*
 
 @Database(
     entities = [StationsDatabaseModel::class],
-    version = 2,
+    version = 3,
     exportSchema = false
 )
 abstract class StationsDatabase : RoomDatabase() {
@@ -40,6 +40,12 @@ interface StationsDao {
     @Query("UPDATE stations SET isFavorite= :isFavorite WHERE id = :id")
     fun setFavorite(isFavorite: Boolean, id: Int)
 
+    @Update
+    suspend fun updateStation(stationsDatabaseModel: StationsDatabaseModel)
+
+    @Update
+    suspend fun updateAllStations(stations: List<StationsDatabaseModel>)
+
 }
 
 @Entity(tableName = "stations")
@@ -52,5 +58,6 @@ data class StationsDatabaseModel(
     var stock: Int,
     var need: Int,
     var isFavorite: Boolean,
-    var universalSpaceTime: Int
+    var universalSpaceTime: Int,
+    var isMissionCompleted: Boolean
 )
