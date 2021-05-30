@@ -68,8 +68,8 @@ class StationsViewModel(
 
     fun travel(
         arrivedPlanet: StationsDatabaseModel,
-        showToast: (message: String) -> Unit,
-        setPlanetName: () -> Unit
+        showToast: (message: String) -> Unit = {},
+        setPlanetName: () -> Unit = {}
     ) {
         if (canGoPlanet(arrivedPlanet, showToast)) {
             setPlanetName.invoke()
@@ -126,6 +126,14 @@ class StationsViewModel(
                 return "Şuan ${it.name} gezegenindesiniz."
             }
         }
-        return "asdasd"
+        return ""
+    }
+
+    fun canGoSomePlanet(): Boolean {
+        adapterList.filter { it.isMissionCompleted.not() }.forEach {
+            if (it.universalSpaceTime <= mySpaceCraft.universalSpaceTime && it.need <= mySpaceCraft.spaceSuitNumber && mySpaceCraft.spaceCraftDamage > 0)
+                return true
+        }
+        return false
     }
 }

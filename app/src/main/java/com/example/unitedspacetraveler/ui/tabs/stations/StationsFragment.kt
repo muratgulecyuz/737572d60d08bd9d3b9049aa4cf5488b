@@ -37,10 +37,12 @@ class StationsFragment(override val layoutId: Int = R.layout.fragment_stations) 
     private fun observeDbStations() {
         viewModel.stationsInfo.observe(viewLifecycleOwner, {
             it?.let {
-                viewModel.adapterList.clear()
-                viewModel.adapterList.addAll(it)
-                pagerAdapter.notifyDataSetChanged()
-                binding.currentPlanetName.text = viewModel.getCurrentPlanetName()
+                if (it.isNotEmpty()) {
+                    viewModel.adapterList.clear()
+                    viewModel.adapterList.addAll(it)
+                    pagerAdapter.notifyDataSetChanged()
+                    binding.currentPlanetName.text = viewModel.getCurrentPlanetName()
+                }
             }
         })
     }
