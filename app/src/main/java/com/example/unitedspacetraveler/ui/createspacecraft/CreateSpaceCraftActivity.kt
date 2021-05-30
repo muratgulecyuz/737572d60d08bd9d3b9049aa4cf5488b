@@ -30,6 +30,7 @@ class CreateSpaceCraftActivity : BaseActivity() {
         speedSeekbarListener()
         capacitySeekbarListener()
         continueButtonClickListener()
+        createSpaceDraftObserve()
     }
 
     override fun getRootView(): View {
@@ -94,7 +95,6 @@ class CreateSpaceCraftActivity : BaseActivity() {
     private fun continueButtonClickListener() {
         binding.btnContinue.setOnClickListener {
             if (isValid()) {
-                viewModel.clearSpaceCraft()
                 viewModel.addSpaceCraft(
                     SpaceCraftDatabaseModel(
                         name = binding.etSpaceCraftName.text.toString(),
@@ -106,9 +106,18 @@ class CreateSpaceCraftActivity : BaseActivity() {
                         yLocation = 0.0
                     )
                 )
-                ActivityUtils.startActivity(MainActivity::class.java)
             }
         }
+    }
+
+    private fun createSpaceDraftObserve() {
+        viewModel.clearSpaceCraft()
+        viewModel.createSpaceDraftResponse.observe(this, {
+            it?.let {
+                ActivityUtils.startActivity(MainActivity::class.java)
+                finish()
+            }
+        })
     }
 
     private fun getRemainPoint(): Int {
