@@ -20,6 +20,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class StationsFragment(override val layoutId: Int = R.layout.fragment_stations) : BaseFragment() {
     private val viewModel: StationsViewModel by viewModel()
     private lateinit var binding: FragmentStationsBinding
+    private lateinit var pagerAdapter: LastAdapter
 
     override fun setUpBinding() {
         binding = bBinding as FragmentStationsBinding
@@ -27,6 +28,7 @@ class StationsFragment(override val layoutId: Int = R.layout.fragment_stations) 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initAdapter()
         observeSpaceCraft()
         observeStations()
         observeDbStations()
@@ -35,7 +37,9 @@ class StationsFragment(override val layoutId: Int = R.layout.fragment_stations) 
     private fun observeDbStations() {
         viewModel.stationsInfo.observe(viewLifecycleOwner, {
             it?.let {
-                initAdapter(it)
+                viewModel.adapterList.clear()
+                viewModel.adapterList.addAll(it)
+                pagerAdapter.notifyDataSetChanged()
             }
         })
     }
@@ -74,9 +78,8 @@ class StationsFragment(override val layoutId: Int = R.layout.fragment_stations) 
         binding.tvStrengthTime.text = getString(R.string.ST, spaceCraftDatabaseModel.strengthTime)
     }
 
-    private fun initAdapter(stationList: List<StationsDatabaseModel>) {
-        if (stationList.isNullOrEmpty().not()) {
-            val pagerAdapter = LastAdapter(stationList, BR.item)
+    private fun initAdapter() {
+            pagerAdapter = LastAdapter(viewModel.adapterList, BR.item)
                 .map<StationsDatabaseModel>(
                     Type<ItemStationsLayoutBinding>(R.layout.item_stations_layout).onBind { holder ->
                         val data = holder.binding.item
@@ -86,7 +89,7 @@ class StationsFragment(override val layoutId: Int = R.layout.fragment_stations) 
                             holder.binding.tvUniversalSpaceTime.text = "EUS"
                             holder.binding.tvPlanetName.text = station.name
                             if (station.isFavorite) {
-                                holder.binding.ivFavorite.setImageResource(R.drawable.ic_space)
+                                holder.binding.ivFavorite.setImageResource(R.drawable.ic_star_selected)
                             } else {
                                 holder.binding.ivFavorite.setImageResource(R.drawable.ic_favorite)
 
@@ -101,7 +104,7 @@ class StationsFragment(override val layoutId: Int = R.layout.fragment_stations) 
 
                 )
             binding.vpPlanets.adapter = pagerAdapter
-        }
+
     }
 
 

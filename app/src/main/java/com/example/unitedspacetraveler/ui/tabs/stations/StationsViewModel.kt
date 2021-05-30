@@ -22,6 +22,7 @@ class StationsViewModel(
     val stationsResponse: MutableLiveData<RESPONSE<List<StationResponse>>> = MutableLiveData()
     var spaceCraftInfo: LiveData<SpaceCraftDatabaseModel?> = MutableLiveData()
     var stationsInfo: LiveData<List<StationsDatabaseModel>?> = MutableLiveData()
+    val adapterList = arrayListOf<StationsDatabaseModel>()
 
     init {
         getStations()
