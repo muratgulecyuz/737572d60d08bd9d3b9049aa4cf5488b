@@ -7,13 +7,17 @@ import com.blankj.utilcode.util.ActivityUtils
 import com.example.unitedspacetraveler.R
 import com.example.unitedspacetraveler.base.BaseActivity
 import com.example.unitedspacetraveler.databinding.ActivityCreateSpaceCraftBinding
+import com.example.unitedspacetraveler.localdata.SpaceCraftDatabaseModel
 import com.example.unitedspacetraveler.ui.MainActivity
 import com.example.unitedspacetraveler.utils.delegate.showToast
 import com.example.unitedspacetraveler.utils.viewBinding
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CreateSpaceCraftActivity : BaseActivity() {
 
     private val binding by viewBinding(ActivityCreateSpaceCraftBinding::inflate)
+    private val viewModel: CreateSpaceCraftViewModel by viewModel()
+
     private val totalPoint = 15
     private var strengthPoint = 0
     private var speedPoint = 0
@@ -90,6 +94,15 @@ class CreateSpaceCraftActivity : BaseActivity() {
     private fun continueButtonClickListener() {
         binding.btnContinue.setOnClickListener {
             if (isValid()) {
+                viewModel.clearSpaceCraft()
+                viewModel.addSpaceCraft(
+                    SpaceCraftDatabaseModel(
+                        name = binding.etSpaceCraftName.text.toString(),
+                        spaceSuitNumber = capacityPoint * 10000,
+                        universalSpaceTime = speedPoint * 20,
+                        strengthTime = strengthPoint * 10000
+                    )
+                )
                 ActivityUtils.startActivity(MainActivity::class.java)
             }
         }

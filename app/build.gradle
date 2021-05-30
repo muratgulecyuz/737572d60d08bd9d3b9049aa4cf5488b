@@ -41,6 +41,7 @@ ext {
     okhttpVersion = '4.9.0'
     lifeCycleVersion = "2.2.0"
     koinVersion = "2.1.6"
+    roomVersion = "2.3.0"
 }
 
 dependencies {
@@ -76,6 +77,15 @@ dependencies {
     //Koin
     implementation "org.koin:koin-android:$koinVersion"
     implementation "org.koin:koin-androidx-viewmodel:$koinVersion"
+    annotationProcessor 'androidx.room:room-compiler:2.3.0'
+
+    //Room
+    implementation "androidx.room:room-runtime:$roomVersion"
+    kapt "androidx.room:room-compiler:$roomVersion"
+    implementation "androidx.room:room-ktx:$roomVersion"
+
+    implementation "com.github.nitrico.lastadapter:lastadapter:2.3.0"
+
 
 
 }

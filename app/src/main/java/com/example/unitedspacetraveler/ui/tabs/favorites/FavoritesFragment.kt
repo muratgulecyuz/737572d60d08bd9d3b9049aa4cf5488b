@@ -1,11 +1,13 @@
 package com.example.unitedspacetraveler.ui.tabs.favorites
 
-import android.os.Bundle
 import com.example.unitedspacetraveler.R
 import com.example.unitedspacetraveler.base.BaseFragment
+import com.example.unitedspacetraveler.databinding.FragmentFavoritesBinding
 
-class FavoritesFragment : BaseFragment(R.layout.fragment_favorites) {
-    override fun prepareView(savedInstanceState: Bundle?) {
+class FavoritesFragment(override val layoutId: Int = R.layout.fragment_favorites) : BaseFragment() {
+    private lateinit var binding: FragmentFavoritesBinding
 
+    override fun setUpBinding() {
+        binding = bBinding as FragmentFavoritesBinding
     }
 }

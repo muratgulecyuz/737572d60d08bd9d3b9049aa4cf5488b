@@ -10,5 +10,9 @@
     <string name="distribute_points">Tüm puanları dağıtın.</string>
     <string name="stations">İstasyonlar</string>
     <string name="favorites">Favoriler</string>
+    <string name="SWP">UGS %1d</string>
+    <string name="UST">EUS %1d</string>
+    <string name="ST">DS %1d</string>
+    <string name="travel">Git</string>
 
 </resources>
