@@ -1,6 +1,7 @@
 package com.example.unitedspacetraveler.ui.createspacecraft
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.SeekBar
 import com.blankj.utilcode.util.ActivityUtils
@@ -22,7 +23,7 @@ class CreateSpaceCraftActivity : BaseActivity() {
     private var strengthPoint = 0
     private var speedPoint = 0
     private var capacityPoint = 0
-    private val intervalPoint: Double = (100).toDouble() / 15
+    private val intervalPoint: Double = (100 / 15).toDouble()
 
     override fun prepareView(savedInstanceState: Bundle?) {
         setDistributedPointText()
@@ -135,7 +136,7 @@ class CreateSpaceCraftActivity : BaseActivity() {
         seekBar: SeekBar,
         changeFunction: () -> Unit
     ) {
-        if (getRemainPoint() < 1 && progress > ((point * intervalPoint)).toInt()) {
+        if (getRemainPoint() < 1 && progress > ((point * intervalPoint))) {
             seekBar.progress = ((point * intervalPoint)).toInt()
         } else {
             changeFunction.invoke()
