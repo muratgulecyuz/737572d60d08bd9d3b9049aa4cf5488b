@@ -1,7 +1,10 @@
 package com.example.unitedspacetraveler.ui.tabs.stations
 
 import android.os.Bundle
+import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import com.example.unitedspacetraveler.BR
 import com.example.unitedspacetraveler.R
 import com.example.unitedspacetraveler.base.BaseFragment
@@ -30,7 +33,6 @@ class StationsFragment(override val layoutId: Int = R.layout.fragment_stations) 
         super.onViewCreated(view, savedInstanceState)
         initAdapter()
         observeSpaceCraft()
-        observeStations()
         observeDbStations()
     }
 
@@ -48,22 +50,6 @@ class StationsFragment(override val layoutId: Int = R.layout.fragment_stations) 
         viewModel.spaceCraftInfo.observe(viewLifecycleOwner, {
             it?.let {
                 initUi(it)
-            }
-        })
-    }
-
-    private fun observeStations() {
-        viewModel.stationsResponse.observe(viewLifecycleOwner, { response ->
-            when (response.status) {
-                STATUS_LOADING -> {
-
-                }
-                STATUS_ERROR -> {
-
-                }
-                STATUS_SUCCESS -> {
-                    response.responseObject?.let { viewModel.addStations(it) }
-                }
             }
         })
     }

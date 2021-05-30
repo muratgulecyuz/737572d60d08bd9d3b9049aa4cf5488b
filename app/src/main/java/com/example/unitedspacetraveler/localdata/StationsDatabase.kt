@@ -34,6 +34,9 @@ interface StationsDao {
     @Query("SELECT * FROM stations")
     fun getStations(): LiveData<List<StationsDatabaseModel>?>
 
+    @Query("SELECT * FROM stations WHERE isFavorite = :isFavorite")
+    fun getFavorites(isFavorite: Boolean = true): LiveData<List<StationsDatabaseModel>?>
+
     @Query("UPDATE stations SET isFavorite= :isFavorite WHERE id = :id")
     fun setFavorite(isFavorite: Boolean, id: Int)
 

@@ -86,6 +86,9 @@ dependencies {
 
     implementation "com.github.nitrico.lastadapter:lastadapter:2.3.0"
 
+    implementation "com.github.applogistdev:ALExtensions-android:0.0.18"
+
+
 
 
 }

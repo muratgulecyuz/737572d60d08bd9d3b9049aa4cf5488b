@@ -3,6 +3,8 @@ package com.example.unitedspacetraveler.di
 import com.example.unitedspacetraveler.localdata.SpaceCraftDatabase
 import com.example.unitedspacetraveler.localdata.StationsDatabase
 import com.example.unitedspacetraveler.ui.createspacecraft.CreateSpaceCraftViewModel
+import com.example.unitedspacetraveler.ui.main.MainViewModel
+import com.example.unitedspacetraveler.ui.tabs.favorites.FavoritesViewModel
 import com.example.unitedspacetraveler.ui.tabs.stations.StationsViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -16,6 +18,8 @@ val koinModules = module {
 
 val viewModelModule = module {
 
-    viewModel { StationsViewModel(get(), get(), get()) }
+    viewModel { StationsViewModel(get(), get()) }
     viewModel { CreateSpaceCraftViewModel(get()) }
+    viewModel { FavoritesViewModel(get()) }
+    viewModel { MainViewModel(get(), get()) }
 }

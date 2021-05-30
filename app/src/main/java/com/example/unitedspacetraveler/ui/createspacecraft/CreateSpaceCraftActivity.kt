@@ -8,7 +8,7 @@ import com.example.unitedspacetraveler.R
 import com.example.unitedspacetraveler.base.BaseActivity
 import com.example.unitedspacetraveler.databinding.ActivityCreateSpaceCraftBinding
 import com.example.unitedspacetraveler.localdata.SpaceCraftDatabaseModel
-import com.example.unitedspacetraveler.ui.MainActivity
+import com.example.unitedspacetraveler.ui.main.MainActivity
 import com.example.unitedspacetraveler.utils.delegate.showToast
 import com.example.unitedspacetraveler.utils.viewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
