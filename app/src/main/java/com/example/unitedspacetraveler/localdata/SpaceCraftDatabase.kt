@@ -6,7 +6,7 @@ import androidx.room.*
 
 @Database(
     entities = [SpaceCraftDatabaseModel::class],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 abstract class SpaceCraftDatabase : RoomDatabase() {
@@ -34,6 +34,9 @@ interface SpaceCraftDao {
 
     @Query("UPDATE spaceCraft SET spaceCraftDamage = :damage")
     fun decreaseDamage(damage: Int)
+
+    @Query("UPDATE spaceCraft SET xLocation = :xLocation,yLocation = :yLocation")
+    fun updateLocation(xLocation: Double, yLocation: Double)
 
 }
 

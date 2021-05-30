@@ -14,7 +14,7 @@ abstract class StationsDatabase : RoomDatabase() {
     companion object {
         fun create(context: Context): StationsDatabase {
             return Room.databaseBuilder(context, StationsDatabase::class.java, "stations.db")
-                .allowMainThreadQueries()
+                .fallbackToDestructiveMigration().allowMainThreadQueries()
                 .build()
         }
     }
@@ -51,5 +51,6 @@ data class StationsDatabaseModel(
     var capacity: Int,
     var stock: Int,
     var need: Int,
-    var isFavorite: Boolean
+    var isFavorite: Boolean,
+    var universalSpaceTime: Int
 )

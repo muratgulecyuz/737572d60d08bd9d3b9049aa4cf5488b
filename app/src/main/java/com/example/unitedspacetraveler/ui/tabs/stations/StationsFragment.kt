@@ -13,6 +13,7 @@ import com.example.unitedspacetraveler.databinding.FragmentStationsBinding
 import com.example.unitedspacetraveler.databinding.ItemStationsLayoutBinding
 import com.example.unitedspacetraveler.localdata.SpaceCraftDatabaseModel
 import com.example.unitedspacetraveler.localdata.StationsDatabaseModel
+import com.example.unitedspacetraveler.utils.getDistance
 import com.github.nitrico.lastadapter.LastAdapter
 import com.github.nitrico.lastadapter.Type
 
@@ -77,7 +78,7 @@ class StationsFragment(override val layoutId: Int = R.layout.fragment_stations) 
                     data?.let { station ->
                         holder.binding.tvCapacityStock.text =
                             "${station.stock} / ${station.capacity}"
-                        holder.binding.tvUniversalSpaceTime.text = "EUS"
+                        holder.binding.tvUniversalSpaceTime.text = "${station.universalSpaceTime} EUS"
                         holder.binding.tvPlanetName.text = station.name
                         if (station.isFavorite) {
                             holder.binding.ivFavorite.setImageResource(R.drawable.ic_star_selected)

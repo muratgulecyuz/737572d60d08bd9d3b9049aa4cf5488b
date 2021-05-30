@@ -45,7 +45,7 @@ class FavoritesFragment(override val layoutId: Int = R.layout.fragment_favorites
             val data = holder.binding.item
             data?.let { favorite ->
                 holder.binding.tvName.text = favorite.name
-                holder.binding.tvUniversalSpaceTime.text = "EUS"
+                holder.binding.tvUniversalSpaceTime.text = "${favorite.universalSpaceTime} EUS"
                 holder.binding.ivFavorite.setOnClickListener {
                     viewModel.removeFavorite(favorite.id!!)
                 }

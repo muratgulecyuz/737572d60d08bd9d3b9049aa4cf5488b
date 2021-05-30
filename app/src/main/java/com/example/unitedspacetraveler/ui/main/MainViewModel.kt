@@ -7,6 +7,7 @@ import com.example.unitedspacetraveler.localdata.StationsDatabase
 import com.example.unitedspacetraveler.localdata.StationsDatabaseModel
 import com.example.unitedspacetraveler.network.ServiceInterface
 import com.example.unitedspacetraveler.network.response.StationResponse
+import com.example.unitedspacetraveler.utils.getDistance
 import com.murgupluoglu.request.RESPONSE
 import com.murgupluoglu.request.request
 import kotlinx.coroutines.CoroutineScope
@@ -39,7 +40,13 @@ class MainViewModel(
                     capacity = it.capacity,
                     stock = it.stock,
                     need = it.need,
-                    isFavorite = false
+                    isFavorite = false,
+                    universalSpaceTime = getDistance(
+                        0,
+                        0,
+                        it.coordinateX.toInt(),
+                        it.coordinateY.toInt()
+                    )
                 )
             )
         }
