@@ -100,7 +100,10 @@ class CreateSpaceCraftActivity : BaseActivity() {
                         name = binding.etSpaceCraftName.text.toString(),
                         spaceSuitNumber = capacityPoint * 10000,
                         universalSpaceTime = speedPoint * 20,
-                        strengthTime = strengthPoint * 10000
+                        strengthTime = strengthPoint * 10000,
+                        spaceCraftDamage = 100,
+                        xLocation = 0.0,
+                        yLocation = 0.0
                     )
                 )
                 ActivityUtils.startActivity(MainActivity::class.java)

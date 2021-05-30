@@ -12,7 +12,7 @@ import androidx.room.*
 abstract class SpaceCraftDatabase : RoomDatabase() {
     companion object {
         fun create(context: Context): SpaceCraftDatabase {
-            return Room.databaseBuilder(context, SpaceCraftDatabase::class.java, "space_craft.db")
+            return Room.databaseBuilder(context, SpaceCraftDatabase::class.java, "spaceCraft.db")
                 .allowMainThreadQueries().build()
         }
     }
@@ -32,6 +32,9 @@ interface SpaceCraftDao {
     @Query("SELECT * FROM spaceCraft ORDER BY id LIMIT 1")
     fun getSpaceCraft(): LiveData<SpaceCraftDatabaseModel?>
 
+    @Query("UPDATE spaceCraft SET spaceCraftDamage = :damage")
+    fun decreaseDamage(damage: Int)
+
 }
 
 @Entity(tableName = "spaceCraft")
@@ -40,5 +43,8 @@ data class SpaceCraftDatabaseModel(
     val name: String,
     var spaceSuitNumber: Int,
     var universalSpaceTime: Int,
-    var strengthTime: Int?,
+    var strengthTime: Int,
+    var spaceCraftDamage: Int,
+    var xLocation: Double,
+    var yLocation: Double
 )

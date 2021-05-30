@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -11,14 +12,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="UGS: 5000" />
 
         <TextView
             android:id="@+id/tvStrengthTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="UGS: 5000" />
 
 
         <TextView
@@ -27,15 +30,47 @@
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toStartOf="@+id/tvStrengthTime"
             app:layout_constraintStart_toEndOf="@id/tvSpaceWearNumber"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="UGS: 5000" />
+
+        <TextView
+            android:id="@+id/tvSpaceCraftName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvUniversalSpaceTime"
+            tools:text="SpaceCraft" />
+
+        <TextView
+            android:id="@+id/tvDamage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/tvSpaceCraftName"
+            app:layout_constraintStart_toStartOf="@id/tvUniversalSpaceTime"
+            app:layout_constraintEnd_toEndOf="@id/tvUniversalSpaceTime"
+            app:layout_constraintTop_toTopOf="@id/tvSpaceCraftName"
+            tools:text="100" />
+
+        <TextView
+            android:id="@+id/tvTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/tvSpaceCraftName"
+            app:layout_constraintStart_toStartOf="@id/tvStrengthTime"
+            app:layout_constraintEnd_toEndOf="@id/tvStrengthTime"
+            app:layout_constraintTop_toTopOf="@id/tvSpaceCraftName"
+            tools:text="100s"/>
+
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/vpPlanets"
             android:layout_width="match_parent"
             android:layout_height="300dp"
+            android:layout_marginTop="32dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvUniversalSpaceTime" />
+            app:layout_constraintTop_toBottomOf="@id/tvSpaceCraftName" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

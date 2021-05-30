@@ -1,6 +1,7 @@
 package com.example.unitedspacetraveler.ui.tabs.stations
 
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -49,6 +50,7 @@ class StationsFragment(override val layoutId: Int = R.layout.fragment_stations) 
     private fun observeSpaceCraft() {
         viewModel.spaceCraftInfo.observe(viewLifecycleOwner, {
             it?.let {
+                viewModel.mySpaceCraft = it
                 initUi(it)
             }
         })
@@ -62,35 +64,59 @@ class StationsFragment(override val layoutId: Int = R.layout.fragment_stations) 
         binding.tvUniversalSpaceTime.text =
             getString(R.string.UST, spaceCraftDatabaseModel.universalSpaceTime)
         binding.tvStrengthTime.text = getString(R.string.ST, spaceCraftDatabaseModel.strengthTime)
+        binding.tvDamage.text = spaceCraftDatabaseModel.spaceCraftDamage.toString()
+        if (viewModel.mySpaceCraft.spaceCraftDamage > 0)
+            initCountDownTimer()
     }
 
     private fun initAdapter() {
-            pagerAdapter = LastAdapter(viewModel.adapterList, BR.item)
-                .map<StationsDatabaseModel>(
-                    Type<ItemStationsLayoutBinding>(R.layout.item_stations_layout).onBind { holder ->
-                        val data = holder.binding.item
-                        data?.let { station ->
-                            holder.binding.tvCapacityStock.text =
-                                "${station.stock} / ${station.capacity}"
-                            holder.binding.tvUniversalSpaceTime.text = "EUS"
-                            holder.binding.tvPlanetName.text = station.name
-                            if (station.isFavorite) {
-                                holder.binding.ivFavorite.setImageResource(R.drawable.ic_star_selected)
-                            } else {
-                                holder.binding.ivFavorite.setImageResource(R.drawable.ic_favorite)
+        pagerAdapter = LastAdapter(viewModel.adapterList, BR.item)
+            .map<StationsDatabaseModel>(
+                Type<ItemStationsLayoutBinding>(R.layout.item_stations_layout).onBind { holder ->
+                    val data = holder.binding.item
+                    data?.let { station ->
+                        holder.binding.tvCapacityStock.text =
+                            "${station.stock} / ${station.capacity}"
+                        holder.binding.tvUniversalSpaceTime.text = "EUS"
+                        holder.binding.tvPlanetName.text = station.name
+                        if (station.isFavorite) {
+                            holder.binding.ivFavorite.setImageResource(R.drawable.ic_star_selected)
+                        } else {
+                            holder.binding.ivFavorite.setImageResource(R.drawable.ic_favorite)
 
-                            }
-                            holder.binding.ivFavorite.setOnClickListener {
-                                viewModel.setFavorite(station.isFavorite.not(), station.id!!)
-                            }
                         }
-
-
+                        holder.binding.ivFavorite.setOnClickListener {
+                            viewModel.setFavorite(station.isFavorite.not(), station.id!!)
+                        }
                     }
 
-                )
-            binding.vpPlanets.adapter = pagerAdapter
 
+                }
+
+            )
+        binding.vpPlanets.adapter = pagerAdapter
+
+    }
+
+    private fun initCountDownTimer() {
+        var second = getDamageTimeInterval() + 1
+        object : CountDownTimer((getDamageTimeInterval() * 1000).toLong(), 1000) {
+            override fun onTick(p0: Long) {
+                second -= 1
+                binding.tvTime.text = "${second}s"
+
+            }
+
+            override fun onFinish() {
+                viewModel.decreaseDamage(viewModel.mySpaceCraft.spaceCraftDamage)
+
+            }
+
+        }.start()
+    }
+
+    private fun getDamageTimeInterval(): Int {
+        return viewModel.mySpaceCraft.strengthTime / 2000
     }
 
 

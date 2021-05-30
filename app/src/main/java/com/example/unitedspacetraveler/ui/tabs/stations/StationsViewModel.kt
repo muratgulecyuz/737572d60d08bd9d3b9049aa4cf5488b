@@ -22,6 +22,7 @@ class StationsViewModel(
     var spaceCraftInfo: LiveData<SpaceCraftDatabaseModel?> = MutableLiveData()
     var stationsInfo: LiveData<List<StationsDatabaseModel>?> = MutableLiveData()
     val adapterList = arrayListOf<StationsDatabaseModel>()
+    lateinit var mySpaceCraft: SpaceCraftDatabaseModel
 
     init {
         getSpaceCraft()
@@ -29,12 +30,9 @@ class StationsViewModel(
     }
 
 
-
-
     private fun getSpaceCraft() {
         spaceCraftInfo = spaceCraftDb.spaceCraftDao().getSpaceCraft()
     }
-
 
 
     private fun getStationsFromDb() {
@@ -44,5 +42,9 @@ class StationsViewModel(
 
     fun setFavorite(isFavorite: Boolean, id: Int) {
         stationsDb.stationsDao().setFavorite(isFavorite, id)
+    }
+
+    fun decreaseDamage(currentDamage: Int) {
+        spaceCraftDb.spaceCraftDao().decreaseDamage(currentDamage - 10)
     }
 }
